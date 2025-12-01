@@ -6,7 +6,7 @@
   --bg-card-inner: #242629; 
   --border-color: #33363a; 
   --border-line: #33363a;
-  --accent:#4ade80;
+  --accent:#3b82f6;
   --muted:#b5d9cc;
   --text:#eafcf7;
   --shadow: 0 5px 15px rgba(0,0,0,0.4);
@@ -19,7 +19,7 @@ body.light-theme {
   --bg-card-inner: rgba(255, 255, 255, 0.7);
   --border-color: rgba(0, 0, 0, 0.1);
   --border-line: rgba(0, 0, 0, 0.15);
-  --accent:#10b981;
+  --accent:#3b82f6;
   --muted:#64748b;
   --text:#1e293b;
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -32,11 +32,9 @@ body{
   background: linear-gradient(160deg,var(--bg-start),var(--bg-end));
   color:var(--text);
   min-height:100vh;
-  height: 100vh;
-  overflow: hidden;
   transition: background 0.5s, color 0.5s;
 }
-.app{ max-width:1100px; margin:0 auto; padding:12px; height: calc(100% - 24px); }
+.app{ max-width:1100px; margin:0 auto; padding:12px; height: auto; }
 .card{
   background: var(--bg-card);
   backdrop-filter: blur(8px);
@@ -165,9 +163,9 @@ body{
     background: var(--bg-card-inner);
     border-radius: 8px;
     margin-right: 10px; 
+    flex-shrink: 0;
 }
 
-/* CUSTOM SCROLLBAR STYLING */
 .favorites-scroll-grid::-webkit-scrollbar,
 #forecastHourly::-webkit-scrollbar,
 #forecastFive::-webkit-scrollbar {
