@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WeatherPulse - Minimal</title>
+
+  <!-- Tailwind CDN for quick utilities; major styles in style.css -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+</head>
+<body>
+  <div class="app container mx-auto p-6">
+    <header class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-green-400">WeatherPulse</h1>
+      <div class="flex items-center gap-3">
+        <input id="searchInput" class="search-input" placeholder="Search City (e.g. Jakarta)" />
+        <button id="refreshBtn" class="btn">Refresh</button>
+      </div>
+    </header>
+
+    <main class="grid lg:grid-cols-3 gap-6">
+      <!-- left column -->
+      <section class="lg:col-span-2 space-y-4">
+        <div class="card flex justify-between items-start">
+          <div>
+            <div id="locationName" class="text-xl font-semibold">—</div>
+            <div id="timestamp" class="muted text-sm">—</div>
+
+            <div class="mt-6">
+              <div id="temperatureLarge" class="text-5xl font-extrabold">—</div>
+              <div id="weatherDescription" class="muted text-sm">—</div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-3 gap-3 text-sm">
+              <div class="card-inner">
+                <div class="muted">Humidity</div>
+                <div id="humidity" class="stat">—</div>
+              </div>
+              <div class="card-inner">
+                <div class="muted">Wind</div>
+                <div id="windSpeed" class="stat">—</div>
+              </div>
+              <div class="card-inner">
+                <div class="muted">Pressure</div>
+                <div id="pressure" class="stat">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center w-44">
+            <div id="weatherIconLarge" class="weather-icon">⛅</div>
+            <div id="feelsLike" class="muted text-sm mt-2">—</div>
+            <div class="mt-4">
+              <button id="favoriteBtn" class="btn">♡ Favorite</button>
+              <button id="openMap" class="btn">Map</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex justify-between items-center mb-3">
+            <div class="font-semibold">Hourly (next 12 hours)</div>
+            <div class="muted text-sm">Last: <span id="lastUpdated">—</span></div>
+          </div>
+          <div id="forecastHourly" class="hourly-grid"></div>
+        </div>
+
+      </section>
+
+      <!-- right column -->
+      <aside class="space-y-4">
+        <div class="card">
+          <div class="font-semibold mb-2">5-Day Forecast</div>
+          <div id="forecastFive" class="grid grid-cols-1 gap-3"></div>
+        </div>
+
+        <div class="card">
+          <div class="font-semibold mb-2">Favorites</div>
+          <div id="favoritesSection" class="text-sm muted">No favorites</div>
+        </div>
+
+        <div class="card">
+          <div class="font-semibold mb-2">Info</div>
+          <div class="muted text-sm">Data: Open-Meteo (no API key) • Geocoding: Nominatim</div>
+        </div>
+      </aside>
+    </main>
+
+    <div id="suggestions" class="suggestions hidden"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
