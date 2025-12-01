@@ -4,7 +4,10 @@ AwanKu adalah aplikasi web modern untuk melihat perkiraan cuaca saat ini, per ja
 
 ## Fitur Utama
 
-Berdasarkan analisis file `index.html`, `script.js`, dan `Dokum/1.png`, fitur-fitur utama aplikasi ini meliputi:
+Fitur-fitur utama aplikasi ini meliputi:
+
+<img width="2541" height="1189" alt="1" src="https://github.com/user-attachments/assets/7885108c-e647-45ec-979b-8082405cbb38" />
+<img width="2531" height="1188" alt="2" src="https://github.com/user-attachments/assets/dd359466-ca30-4aeb-83e5-7721255a167b" />
 
 * **Data Cuaca Lengkap**
     * **Cuaca Saat Ini**: Menampilkan suhu besar, suhu min/maks, deskripsi cuaca (misalnya, Hujan Badai), dan suhu yang "terasa seperti".
