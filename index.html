@@ -5,90 +5,146 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>WeatherPulse - Minimal</title>
 
-  <!-- Tailwind CDN for quick utilities; major styles in style.css -->
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 </head>
-<body>
-  <div class="app container mx-auto p-6">
-    <header class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold text-green-400">WeatherPulse</h1>
-      <div class="flex items-center gap-3">
-        <input id="searchInput" class="search-input" placeholder="Search City (e.g. Jakarta)" />
-        <button id="refreshBtn" class="btn">Refresh</button>
+<body class="dark-theme">
+  <div class="app container mx-auto p-6"> 
+    
+    <header class="flex items-center justify-between mb-4">
+      <h1 class="text-2xl font-bold text-green-400">WeatherPulse Dashboard</h1>
+      <div class="flex items-center gap-3 relative" id="searchContainer">
+        <button id="themeToggleBtn" class="btn small">🌙</button>
+        <input id="searchInput" class="search-input" placeholder="Cari Lokasi (mis. Jakarta)" style="width:250px" />
+        <button id="refreshBtn" class="btn">Segarkan</button>
+        <div id="suggestions" class="suggestions hidden"></div>
       </div>
     </header>
 
-    <main class="grid lg:grid-cols-3 gap-6">
-      <!-- left column -->
-      <section class="lg:col-span-2 space-y-4">
-        <div class="card flex justify-between items-start">
-          <div>
-            <div id="locationName" class="text-xl font-semibold">—</div>
-            <div id="timestamp" class="muted text-sm">—</div>
-
-            <div class="mt-6">
-              <div id="temperatureLarge" class="text-5xl font-extrabold">—</div>
-              <div id="weatherDescription" class="muted text-sm">—</div>
-            </div>
-
-            <div class="mt-6 grid grid-cols-3 gap-3 text-sm">
-              <div class="card-inner">
-                <div class="muted">Humidity</div>
-                <div id="humidity" class="stat">—</div>
-              </div>
-              <div class="card-inner">
-                <div class="muted">Wind</div>
-                <div id="windSpeed" class="stat">—</div>
-              </div>
-              <div class="card-inner">
-                <div class="muted">Pressure</div>
-                <div id="pressure" class="stat">—</div>
-              </div>
-            </div>
+    <main class="grid lg:grid-cols-5 gap-6 h-full" style="height: calc(100vh - 150px);">
+      
+      <section class="lg:col-span-3 space-y-4">
+        
+        <div class="card p-6">
+          <div class="flex justify-between items-center mb-4">
+             <div class="flex items-center gap-2">
+                <i class="fas fa-map-marker-alt text-lg"></i>
+                <div id="locationName" class="text-xl font-semibold">—</div>
+             </div>
+             <div class="flex items-center gap-2">
+                <button id="tempToggleBtn" class="btn small">°C</button>
+                <div id="timestamp" class="muted text-sm">—</div>
+             </div>
           </div>
 
-          <div class="text-center w-44">
-            <div id="weatherIconLarge" class="weather-icon">⛅</div>
-            <div id="feelsLike" class="muted text-sm mt-2">—</div>
-            <div class="mt-4">
-              <button id="favoriteBtn" class="btn">♡ Favorite</button>
-              <button id="openMap" class="btn">Map</button>
-            </div>
+          <div class="flex items-start justify-between">
+            
+             <div class="flex items-center gap-4">
+                <div id="weatherIconLarge" class="main-weather-icon"></div>
+                <div>
+                    <div id="temperatureLarge" class="text-6xl font-extrabold">—</div>
+                    <div id="minMaxTemp" class="muted text-lg">—</div>
+                    <div id="weatherDescription" class="font-semibold text-xl mt-2">—</div>
+                    <div id="feelsLike" class="muted text-sm mt-1">Terasa seperti —</div>
+                </div>
+             </div>
+
+             <div class="text-right flex flex-col items-end gap-2">
+                <button id="favoriteBtn" class="btn small">♡ Favorit</button>
+                <button id="openMap" class="btn small">Peta</button>
+             </div>
           </div>
         </div>
-
+        
         <div class="card">
           <div class="flex justify-between items-center mb-3">
-            <div class="font-semibold">Hourly (next 12 hours)</div>
-            <div class="muted text-sm">Last: <span id="lastUpdated">—</span></div>
+            <div class="font-semibold">Perkiraan Per Jam (12 Jam Berikutnya)</div>
+            <div class="muted text-sm">Terakhir diperiksa: <span id="lastUpdated">—</span></div>
           </div>
-          <div id="forecastHourly" class="hourly-grid"></div>
+          <div id="forecastHourly" class="forecast-scroll-grid hourly-grid"></div>
+        </div>
+        
+        <div class="card flex-grow" style="min-height: 120px;">
+            <div class="flex justify-between items-center mb-3">
+                <div class="font-semibold">Lokasi Lain</div>
+            </div>
+            <div id="nearbyLocations" class="favorites-scroll-grid">
+            </div>
         </div>
 
       </section>
 
-      <!-- right column -->
-      <aside class="space-y-4">
+      <aside class="lg:col-span-2 space-y-4 h-full flex flex-col">
+        
+        <div class="card flex-grow">
+          <div class="font-semibold mb-3">Sorotan Hari Ini</div>
+          <div class="highlights-grid">
+            
+            <div class="highlight-item">
+              <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-wind highlight-icon"></i> Angin
+              </div>
+              <div id="windSpeed" class="highlight-value">—</div>
+              <div class="highlight-detail">9:00 AM</div>
+            </div>
+
+            <div class="highlight-item">
+              <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-water highlight-icon"></i> Kelembaban
+              </div>
+              <div id="humidity" class="highlight-value">—</div>
+              <div class="highlight-detail">Tingkat nyaman</div>
+            </div>
+
+            <div class="highlight-item">
+              <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-sun highlight-icon"></i> Indeks UV
+              </div>
+              <div id="uvIndexMax" class="highlight-value">—</div>
+              <div class="highlight-detail">Level sedang</div>
+            </div>
+
+            <div class="highlight-item">
+              <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-moon highlight-icon"></i> Matahari Terbenam
+              </div>
+              <div id="sunsetTime" class="highlight-value">—</div>
+              <div class="highlight-detail">Terakhir diperiksa</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-cloud-sun highlight-icon"></i> AQI
+              </div>
+              <div id="aqi" class="highlight-value">—</div>
+              <div class="highlight-detail">Baik</div>
+            </div>
+            
+            <div class="highlight-item">
+              <div class="flex items-center gap-2 text-sm">
+                <i class="fas fa-tint highlight-icon"></i> Curah Hujan
+              </div>
+              <div id="precipitation" class="highlight-value">—</div>
+              <div class="highlight-detail">Dalam 24 Jam</div>
+            </div>
+
+          </div>
+        </div>
+        
         <div class="card">
-          <div class="font-semibold mb-2">5-Day Forecast</div>
-          <div id="forecastFive" class="grid grid-cols-1 gap-3"></div>
+          <div class="font-semibold mb-3">Perkiraan 10 Hari Mendatang</div>
+          <div id="forecastFive" class="forecast-scroll-grid">
+            
+          </div>
         </div>
 
-        <div class="card">
-          <div class="font-semibold mb-2">Favorites</div>
-          <div id="favoritesSection" class="text-sm muted">No favorites</div>
-        </div>
-
-        <div class="card">
-          <div class="font-semibold mb-2">Info</div>
-          <div class="muted text-sm">Data: Open-Meteo (no API key) • Geocoding: Nominatim</div>
-        </div>
-      </aside>
+        </aside>
     </main>
+    
+    <div id="favoritesSection" class="favorites-scroll-grid mt-4">
+    </div>
 
-    <div id="suggestions" class="suggestions hidden"></div>
   </div>
 
   <script src="script.js"></script>
